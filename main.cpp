@@ -43,7 +43,7 @@ void NAIVE_RSA_KEY_GENERATOR(long long p, long long q, long long& n, long long& 
     n = p * q;
     long long phi = (p - 1) * (q - 1);
     long long pista = 0;
-    while (e < n) { // e = {2,n-1}
+    while (e < phi) { // e = {2,(p - 1) * (q - 1)}
         pista = Gcd(e, phi);
         if (pista == 1) {
             d = inversoM(e, phi);
@@ -70,7 +70,7 @@ int main() {
     mensaje = 0, p = 3, q = 11, n = 0, e = 2, d = 0, Pm = 0, Sc = 0;
     cout << "\n\nEscriba un mensaje m[0,32]: ";
     cin >> mensaje;
-    while (e < p * q) {
+    while (e < (p-1) * (q-1)) {
         NAIVE_RSA_KEY_GENERATOR(p, q, n, e, d);
         Pm = pow(mensaje, e);
         Pm = (Pm % n + n) % n;// mensaje cifrado
