@@ -71,27 +71,17 @@ long long int modular(unsigned long long int base, unsigned long long int exp, u
 int main() {
      long long int mensaje = 0, p = 3, q = 11, n = 0, e = 2, d = 0, Pm = 0, Sc = 0;
     cout << "Tabla: " << "m" << " ^ " << "e" << " mod " << "n" << " = " << " c \n";
-    while (mensaje < p * q) {
-        NAIVE_RSA_KEY_GENERATOR(p, q, n, e, d);
-        Pm = modular(mensaje,e,n); // mensaje cifrado  mensaje^e mod n
-        Sc = modular(Pm, d,n);// mensaje descifrado  c ^d mod n = mensaje 
-        cout <<d<< "\t\t" << mensaje << " ^ " << e << " mod " << n << " = " << Pm << "\t\tmensaje descifrado: " << Sc << "\n";
-        mensaje = mensaje +1;
+    NAIVE_RSA_KEY_GENERATOR(p,q,n,e,d);
+    int cont = 0;
+    for (int i = 0; i < n; i++){
+        mensaje = i;
+        int c = modular(mensaje, e, n);
+        if(mensaje == c)cont++;
+        cout <<"\t"<<mensaje<<"^"<<e<<" mod "<<n<<" =c\tc: " << c<<"\n";
+        cout << "mensaje: " << modular(c, d, n) <<"\n\n";
+        
     }
-    /////////////////////////////////////
-    mensaje = 0, p = 3, q = 11, n = 0, e = 2, d = 0, Pm = 0, Sc = 0;
-    cout << "\n\nEscriba un mensaje m[0,32]: ";
-    cin >> mensaje;
-    while (e < (p - 1) * (q - 1)) {
-        NAIVE_RSA_KEY_GENERATOR(p, q, n, e, d);
-        Pm = modular(mensaje, e, n);// mensaje cifrado
-        if (Pm == mensaje) { // m ^ e mod n == m
-            Sc = modular(Pm, d, n);// mensaje descifrado
-            cout << "\t\t" << mensaje << " ^ " << e << " mod " << n << " = " << Pm << "\t\tmensaje descifrado: " << Sc << "\n";
-        }
-        e = e + 1;
-
-    }
+    cout<<"son "<<cont<<" casos donde el mensaje y el mensaje cifrado son los mismos\n";
     
     return 0;
 }
